@@ -1,6 +1,7 @@
 
+let term ='';
+const songContainer= document.getElementById('songs');
 
-let term =''
 const updateterm = () =>{
     term =document.getElementById('searchInput').value;
 
@@ -9,14 +10,18 @@ const updateterm = () =>{
 
     }
     else{
-        const url=`https://itunes.apple.com/search?term=${term}`
+            while(songContainer.firstChild)
+            {
+                songContainer.removeChild(songContainer.firstChild);
+            }
+
+        const url=`https://itunes.apple.com/search?media=music&term=${term}`
         fetch(url)
         .then( (responce) => responce.json())
         .then( (data) => {
             const artist=data.results;
             return artist.map(result => {
         
-                const songContainer= document.getElementById('songs');
                 const article=document.createElement('article'),
                         artist=document.createElement('p'),
                         song=document.createElement('p'),
@@ -50,3 +55,14 @@ const updateterm = () =>{
 const searchbtn=document.querySelector('button')
 
 searchbtn.addEventListener('click',updateterm);
+
+document.addEventListener('play', event=>{
+    const audio=document.getElementsByTagName('audio');
+    for(let i=0;i<audio.length;i++)
+    {
+        if(audio[i]!=event.target)
+        {
+            audio[i].play();
+        }
+    }
+}, true );
