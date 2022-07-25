@@ -62,7 +62,7 @@ document.addEventListener('play', event=>{
     {
         if(audio[i]!=event.target)
         {
-            audio[i].play();
+            audio[i].pause();
         }
     }
 }, true );
